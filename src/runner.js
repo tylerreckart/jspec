@@ -35,7 +35,7 @@ const formatResult = (value, expected) =>
   `expect ${value} ${method} ${expected}`;
 
 const expect = (value) => ({
-  toEqual: (expected) {
+  toEqual: (expected) => {
     if (value === expected) {
       activeTests.expects.push({
         name: formatResult(value, 'toEqual', expected),
@@ -56,7 +56,9 @@ global.describe = describe;
 global.it = it;
 global.expect = expect;
 
-export default function logResults() {
+const logResults = () => {
   log(`Total Tests: ${testCount}, Passed: ${passCount}, Failed: ${failCount}`);
-}
+};
+
+module.exports = logResults;
 

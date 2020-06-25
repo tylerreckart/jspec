@@ -2,12 +2,18 @@ const path = require('path');
 const fs = require('fs');
 const logResults = require('./runner');
 
-const EXTENSION = '.spec.js';
+const BASE_DIRECTORY = path.dirname(require.main.filename);
 
 const searchForTests = () => {
-  fs.readdir(__dirname, (err, files)) => {
-    return files.filter(el => /\.spec.js$/.test(el));
-  }
+  const tests = [];
+
+  fs.readdirSync(BASE_DIRECTORY).forEach((file) => {
+    if (/\.spec.js$/.test(file)) {
+      tests.push(file);
+    }
+  });
+
+  return tests;
 }
 
 function run() {
