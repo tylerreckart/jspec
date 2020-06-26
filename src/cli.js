@@ -20,6 +20,8 @@ function run() {
   const files = searchForTests();
 
   if (files.length > 0) {
+    files.forEach((file) => require(fs.realpathSync(`src/${file}`)));
+
     logResults();
   } else {
     console.error('No test files found');

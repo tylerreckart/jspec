@@ -1,6 +1,8 @@
-const testCount = 0;
-const passCount = 0;
-const failCount = 0;
+const chalk = require('chalk');
+
+let testCount = 0;
+let passCount = 0;
+let failCount = 0;
 
 let activeSuite = { it: [] };
 let activeTest = {};
@@ -31,20 +33,20 @@ const it = (desc, callback) => {
   activeSuite.it.push(activeTest);
 };
 
-const formatResult = (value, expected) =>
+const formatResult = (value, method, expected) =>
   `expect ${value} ${method} ${expected}`;
 
 const expect = (value) => ({
   toEqual: (expected) => {
     if (value === expected) {
-      activeTests.expects.push({
+      activeTest.expects.push({
         name: formatResult(value, 'toEqual', expected),
         pass: true,
       });
       passCount++;
     } else {
-      activeTests.expects.push({
-        name: formatResult(vlaue, 'toEqual', expected),
+      activeTest.expects.push({
+        name: formatResult(value, 'toEqual', expected),
         pass: false,
       });
       failCount++;
@@ -57,7 +59,7 @@ global.it = it;
 global.expect = expect;
 
 const logResults = () => {
-  log(`Total Tests: ${testCount}, Passed: ${passCount}, Failed: ${failCount}`);
+  log(`Total Tests: ${testCount}, Passed: ${chalk.green(passCount)}, Failed: ${chalk.red(failCount)}`);
 };
 
 module.exports = logResults;
